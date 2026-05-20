@@ -1,0 +1,1503 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Pino — 高品質 LP 制作 / Frontend Engineer</title>
+<meta name="description" content="高品質LP制作（デザイン+コーディング）を最短スピードで請け負う、26歳女性フロントエンドエンジニア Pino のポートフォリオ。" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho+B1:wght@500;600&family=JetBrains+Mono:wght@500&display=swap" />
+<template id="__bundler_thumbnail" data-bg-color="#FDFCFA">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#FDFCFA"/>
+    <circle cx="900" cy="220" r="220" fill="#FBEEF1"/>
+    <text x="600" y="430" font-family="Cormorant Garamond, serif" font-style="italic" font-size="220" fill="#D17A89" text-anchor="middle">Pino</text>
+    <text x="600" y="500" font-family="serif" font-size="36" fill="#2A2421" text-anchor="middle" letter-spacing="6">PORTFOLIO</text>
+    <g transform="translate(560 580)" fill="#C9A88B">
+      <path d="M22 4c2 0 3.6 1.4 4.4 3.6L29 18c1-.4 2-.6 3-.6s2 .2 3 .6l2.6-10.4C38.4 5.4 40 4 42 4c2.8 0 5 2.4 5 5.4 0 1.2-.4 5.6-1.6 11C50 23 53 28.4 53 34.6 53 45.4 43.6 54 32 54S11 45.4 11 34.6c0-6.2 3-11.6 7.6-14.2C17.4 15 17 10.6 17 9.4 17 6.4 19.2 4 22 4z" transform="scale(1.5)"/>
+    </g>
+  </svg>
+</template>
+<style id="palette">
+:root{
+  --bg: #FDFCFA;
+  --bg-soft: #FBF6F2;
+  --bg-pink: #FBEEF1;
+  --ink: #2A2421;
+  --ink-soft: #5B4F47;
+  --ink-mute: #8B7E74;
+  --line: #ECE5DD;
+  --line-strong: #DDD3C9;
+  --pink: #E8A5B0;
+  --pink-deep: #D17A89;
+  --pink-soft: #F6D7DC;
+  --taupe: #C9A88B;
+  --taupe-deep: #9C7E62;
+  --gold: #B89968;
+  --serif-ja: "Shippori Mincho B1", "Noto Serif JP", serif;
+  --sans-ja: "Noto Sans JP", system-ui, sans-serif;
+  --serif-en: "Cormorant Garamond", "Times New Roman", serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+}
+</style>
+<style>
+*{ box-sizing:border-box; margin:0; padding:0; }
+html{ scroll-behavior:smooth; }
+body{
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans-ja);
+  font-weight: 400;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+img{ max-width:100%; display:block; }
+a{ color:inherit; text-decoration:none; }
+button{ font: inherit; color: inherit; background:none; border:0; cursor:pointer; }
+::selection{ background: var(--pink-soft); color: var(--ink); }
+
+/* ---------- Layout helpers ---------- */
+.wrap{ width: min(1240px, 92vw); margin-inline:auto; }
+.eyebrow{
+  font-family: var(--serif-en);
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: .04em;
+  color: var(--pink-deep);
+  font-size: 15px;
+}
+.eyebrow .num{
+  font-family: var(--serif-en);
+  font-variant-numeric: lining-nums;
+  font-style: italic;
+}
+.section-title{
+  font-family: var(--serif-ja);
+  font-weight: 600;
+  font-size: clamp(28px, 3.4vw, 44px);
+  line-height: 1.25;
+  letter-spacing: .02em;
+  color: var(--ink);
+}
+.section-title em{
+  font-style: normal;
+  font-family: var(--serif-en);
+  font-style: italic;
+  font-weight: 500;
+  color: var(--pink-deep);
+}
+.section-head{
+  display:flex; align-items:flex-end; justify-content:space-between;
+  gap: 32px; margin-bottom: 56px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 28px;
+}
+.section-head .meta{
+  font-family: var(--serif-en); font-style: italic;
+  color: var(--ink-mute); font-size: 15px; white-space:nowrap;
+}
+.section{ padding: 120px 0; position: relative; }
+.section.alt{ background: var(--bg-soft); }
+
+/* ---------- Scroll reveal ---------- */
+.reveal{ opacity:0; transform: translateY(18px); transition: opacity .9s ease, transform .9s cubic-bezier(.2,.7,.2,1); }
+.reveal.in{ opacity:1; transform:none; }
+.reveal.delay-1{ transition-delay:.08s; }
+.reveal.delay-2{ transition-delay:.16s; }
+.reveal.delay-3{ transition-delay:.24s; }
+.reveal.delay-4{ transition-delay:.32s; }
+.reveal.delay-5{ transition-delay:.4s; }
+
+/* ---------- Header ---------- */
+.header{
+  position: fixed; inset: 0 0 auto 0; z-index: 100;
+  padding: 22px 0;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: rgba(253,252,250,.78);
+  border-bottom: 1px solid transparent;
+  transition: background .3s ease, border-color .3s ease, padding .3s ease;
+}
+.header.scrolled{ padding: 14px 0; background: rgba(253,252,250,.92); border-bottom-color: var(--line); }
+.header .wrap{ display:flex; align-items:center; justify-content:space-between; gap: 24px; }
+.brand{ display:flex; align-items:center; gap: 10px; }
+.brand .logo{
+  font-family: var(--serif-en);
+  font-weight: 500;
+  font-size: 28px;
+  letter-spacing: .02em;
+  position: relative;
+}
+.brand .logo::first-letter{ color: var(--pink-deep); }
+.brand .bunny{ width: 22px; height: 22px; color: var(--taupe-deep); }
+.brand .ribbon{ width: 18px; height: 18px; color: var(--pink-deep); margin-top: -10px; }
+.brand .tag{
+  margin-left: 6px; padding-left: 12px; border-left: 1px solid var(--line-strong);
+  font-size: 11px; letter-spacing:.12em; color: var(--ink-mute); text-transform: uppercase;
+}
+.nav{ display:flex; align-items:center; gap: 36px; }
+.nav a{
+  font-size: 13px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink-soft); position: relative; padding: 4px 0;
+  transition: color .2s ease;
+}
+.nav a .n{
+  font-family: var(--serif-en); font-style: italic; font-size: 12px;
+  color: var(--pink-deep); margin-right: 6px; letter-spacing: 0;
+}
+.nav a:hover{ color: var(--ink); }
+.nav a::after{
+  content:""; position:absolute; left:0; right:0; bottom:-2px; height:1px; background: var(--pink-deep);
+  transform: scaleX(0); transform-origin: left; transition: transform .35s ease;
+}
+.nav a:hover::after{ transform: scaleX(1); }
+.cta-btn{
+  font-size: 13px; letter-spacing: .12em; text-transform: uppercase;
+  padding: 12px 22px; border-radius: 999px;
+  background: var(--ink); color: var(--bg);
+  transition: background .25s ease, transform .25s ease;
+}
+.cta-btn:hover{ background: var(--pink-deep); transform: translateY(-1px); }
+.hamburger{ display:none; width: 40px; height: 40px; border-radius: 999px; border:1px solid var(--line-strong); align-items:center; justify-content:center; }
+.hamburger span{ display:block; width: 18px; height: 1.5px; background: var(--ink); position: relative; transition: transform .3s ease, opacity .3s ease; }
+.hamburger span::before, .hamburger span::after{
+  content:""; position:absolute; left:0; width: 18px; height: 1.5px; background: var(--ink);
+  transition: transform .3s ease;
+}
+.hamburger span::before{ top: -6px; }
+.hamburger span::after{ top: 6px; }
+.hamburger.open span{ background: transparent; }
+.hamburger.open span::before{ transform: translateY(6px) rotate(45deg); }
+.hamburger.open span::after{ transform: translateY(-6px) rotate(-45deg); }
+
+.mobile-menu{
+  position: fixed; inset: 0; z-index: 90;
+  background: var(--bg);
+  padding: 100px 32px 32px;
+  display: none;
+  flex-direction: column; gap: 8px;
+}
+.mobile-menu.open{ display: flex; }
+.mobile-menu a{
+  display:flex; align-items:baseline; gap: 12px;
+  padding: 18px 0; border-bottom: 1px solid var(--line);
+  font-family: var(--serif-ja); font-size: 22px;
+}
+.mobile-menu a .n{ font-family: var(--serif-en); font-style: italic; color: var(--pink-deep); font-size: 14px; }
+
+/* ---------- HERO ---------- */
+.hero{
+  position: relative;
+  padding: 200px 0 140px;
+  overflow: hidden;
+}
+.hero::before{
+  content:""; position:absolute; inset: 0;
+  background: radial-gradient(80% 60% at 85% 15%, var(--bg-pink) 0%, transparent 60%);
+  pointer-events: none;
+}
+.hero .wrap{ position: relative; z-index: 1; }
+.hero-grid{
+  display:grid; grid-template-columns: 1.3fr .9fr; gap: 60px; align-items: end;
+}
+.hero-meta{
+  display:flex; align-items:center; gap: 14px; margin-bottom: 36px;
+  font-family: var(--serif-en); font-style: italic; color: var(--ink-mute); font-size: 14px;
+}
+.hero-meta .dot{ width: 6px; height: 6px; border-radius: 50%; background: var(--pink-deep); }
+.hero-meta .line-x{ flex: 0 0 40px; height: 1px; background: var(--line-strong); }
+.hero h1{
+  font-family: var(--serif-ja);
+  font-weight: 600;
+  font-size: clamp(40px, 6.4vw, 92px);
+  line-height: 1.08;
+  letter-spacing: .01em;
+  color: var(--ink);
+}
+.hero h1 .accent{
+  font-family: var(--serif-en);
+  font-style: italic;
+  font-weight: 500;
+  color: var(--pink-deep);
+  font-size: .82em;
+  display: inline-block;
+  padding: 0 .1em;
+}
+.hero h1 .stroke{
+  position: relative; display: inline-block;
+}
+.hero h1 .stroke::after{
+  content:""; position:absolute; left: -2%; right:-2%; bottom: 4%;
+  height: .22em; background: var(--pink-soft);
+  z-index:-1; border-radius: 2px;
+}
+.hero-sub{
+  margin-top: 28px;
+  font-size: clamp(15px, 1.4vw, 19px);
+  color: var(--ink-soft);
+  font-weight: 400; max-width: 540px;
+}
+.hero-actions{ display:flex; gap: 16px; margin-top: 40px; align-items: center; }
+.btn-primary{
+  display:inline-flex; align-items:center; gap: 10px;
+  padding: 16px 28px; border-radius: 999px;
+  background: var(--ink); color: var(--bg);
+  font-size: 14px; letter-spacing: .08em;
+  transition: background .25s ease, transform .25s ease;
+}
+.btn-primary:hover{ background: var(--pink-deep); transform: translateY(-1px); }
+.btn-primary .arrow{ transition: transform .25s ease; }
+.btn-primary:hover .arrow{ transform: translateX(4px); }
+.btn-ghost{
+  display:inline-flex; align-items:center; gap: 10px;
+  padding: 16px 22px; border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  font-size: 14px; letter-spacing: .08em; color: var(--ink-soft);
+  transition: border-color .25s ease, color .25s ease;
+}
+.btn-ghost:hover{ border-color: var(--ink); color: var(--ink); }
+
+.hero-side{
+  position: relative;
+  padding: 28px 32px;
+  border-left: 1px solid var(--line);
+}
+.hero-side .kv{
+  display:flex; justify-content:space-between; align-items:baseline;
+  padding: 18px 0; border-bottom: 1px solid var(--line);
+  gap: 20px;
+}
+.hero-side .kv:last-child{ border-bottom: 0; }
+.hero-side .kv .k{ font-size: 11px; letter-spacing: .18em; color: var(--ink-mute); text-transform: uppercase; }
+.hero-side .kv .v{ font-family: var(--serif-ja); font-size: 17px; color: var(--ink); }
+.hero-side .kv .v .num{ font-family: var(--serif-en); font-style: italic; color: var(--pink-deep); font-size: 22px; margin-right: 2px; }
+.hero-floating-bunny{
+  position: absolute; top: -42px; right: 0;
+  width: 56px; height: 56px; color: var(--taupe);
+  transform: rotate(8deg);
+  opacity: .85;
+}
+
+/* "ticker" subtle band under hero */
+.ticker{
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 22px 0;
+  background: var(--bg);
+  overflow: hidden;
+}
+.ticker-row{ display:flex; gap: 64px; align-items:center; color: var(--ink-mute); }
+.ticker-item{ display:flex; align-items:center; gap: 14px; flex: 0 0 auto; font-size: 13px; letter-spacing:.1em; text-transform: uppercase; }
+.ticker-item .star{ color: var(--pink-deep); }
+.ticker-item .sep{ width: 6px; height: 6px; border-radius:50%; background: var(--line-strong); }
+
+/* ---------- ABOUT ---------- */
+.about-grid{
+  display:grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: start;
+}
+.about-portrait{
+  aspect-ratio: 4/5;
+  position: relative; overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: linear-gradient(160deg, #FCE9EE 0%, #FBF6F2 55%, #F2E3D6 100%);
+}
+.about-portrait .frame{
+  position:absolute; inset: 14px; border: 1px solid rgba(209,122,137,.25);
+  pointer-events: none; border-radius: 2px; z-index: 3;
+}
+.about-portrait .ap-circle{
+  position: absolute; top: -18%; right: -14%;
+  width: 78%; aspect-ratio: 1; border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #ECCDB8, #C9A88B 70%);
+  opacity: .55;
+}
+.about-portrait .ap-block{
+  position: absolute; bottom: -2%; left: -4%;
+  width: 64%; height: 38%;
+  background: linear-gradient(135deg, rgba(232,165,176,.45) 0%, rgba(232,165,176,.08) 100%);
+  border-top-right-radius: 60% 40%;
+}
+.about-portrait .ap-noise{
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(-45deg, transparent 0 22px, rgba(255,255,255,.18) 22px 44px);
+  mix-blend-mode: overlay; opacity: .5;
+}
+.about-portrait .ap-mark{
+  position: absolute; left: 32px; top: 30%; right: 24px;
+  display: flex; flex-direction: column; gap: 10px; z-index: 2;
+}
+.about-portrait .ap-mark-num{
+  font-family: var(--mono); font-size: 10px; letter-spacing: .22em;
+  color: var(--ink-soft); text-transform: uppercase;
+  display: flex; align-items: center; gap: 10px;
+}
+.about-portrait .ap-mark-num::before{
+  content:""; width: 18px; height: 1px; background: var(--pink-deep);
+}
+.about-portrait .ap-mark-name{
+  font-family: var(--serif-en); font-style: italic; font-weight: 500;
+  font-size: clamp(72px, 10vw, 132px); line-height: .88;
+  color: var(--ink); letter-spacing: -.01em;
+}
+.about-portrait .ap-mark-name em{ font-style: italic; color: var(--pink-deep); }
+.about-portrait .ap-mark-role{
+  font-family: var(--serif-ja); font-size: 13px; color: var(--ink-soft);
+  margin-top: 6px; letter-spacing: .04em;
+}
+.about-portrait .ap-tagline{
+  position: absolute; left: 32px; right: 32px; bottom: 56px;
+  font-family: var(--serif-ja); font-size: 14px; color: var(--ink-soft);
+  line-height: 1.7; z-index: 2; max-width: 220px;
+}
+.about-portrait .ap-tagline strong{ color: var(--pink-deep); font-weight: 600; }
+.about-portrait .ap-bunny{
+  position: absolute; bottom: 56px; right: 28px; width: 38px; height: 38px;
+  color: var(--taupe-deep); opacity: .9; z-index: 2;
+  transform: rotate(-6deg);
+}
+.about-portrait .caption{
+  position: absolute; left: 14px; bottom: 14px; right: 14px;
+  display:flex; justify-content:space-between; font-family: var(--mono); font-size: 10px;
+  color: var(--ink-mute); letter-spacing: .14em; z-index: 3;
+}
+.about-body p{
+  font-size: 17px; color: var(--ink-soft); margin-bottom: 1.4em; line-height: 1.85;
+}
+.about-body p:first-child::first-letter{
+  font-family: var(--serif-en); font-style: italic; font-size: 4.4em;
+  float: left; line-height: .9; padding: .08em .14em 0 0;
+  color: var(--pink-deep);
+}
+.about-body .signature{
+  margin-top: 32px; display:flex; align-items:center; gap: 16px;
+}
+.about-body .signature .name{
+  font-family: var(--serif-en); font-style: italic; font-size: 28px; color: var(--ink);
+}
+.about-body .signature .role{
+  font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-mute);
+}
+
+/* ---------- CAREER / STATS BIG NUMBERS ---------- */
+.stats-grid{
+  display:grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.stat{
+  padding: 56px 36px;
+  border-right: 1px solid var(--line);
+  position: relative;
+}
+.stat:last-child{ border-right: 0; }
+.stat .label{
+  font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-mute);
+  margin-bottom: 18px;
+  display:flex; align-items:center; gap: 10px;
+}
+.stat .label::before{
+  content:""; width: 18px; height: 1px; background: var(--pink-deep);
+}
+.stat .number{
+  font-family: var(--serif-en);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(56px, 7vw, 104px);
+  line-height: 1;
+  color: var(--pink-deep);
+  letter-spacing: -.02em;
+  display: flex; align-items: baseline; gap: 4px;
+}
+.stat .number .suffix{ font-size: .4em; color: var(--ink); font-style: normal; font-family: var(--serif-ja); font-weight: 500; }
+.stat .number .arrow{ font-size: .35em; color: var(--ink-mute); margin: 0 .14em; font-style: normal; }
+.stat .number .from{ color: var(--ink-mute); }
+.stat .desc{ margin-top: 18px; font-size: 14px; color: var(--ink-soft); }
+.stat .corner{
+  position:absolute; top: 16px; right: 16px;
+  font-family: var(--mono); font-size: 10px; color: var(--ink-mute); letter-spacing: .14em;
+}
+
+.career-detail{
+  display:grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-top: 80px;
+}
+.career-card{
+  padding: 32px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  position: relative;
+  transition: border-color .3s ease, transform .3s ease;
+}
+.career-card:hover{ border-color: var(--pink); transform: translateY(-2px); }
+.career-card .yr{
+  font-family: var(--serif-en); font-style: italic; font-size: 14px; color: var(--pink-deep);
+  margin-bottom: 12px;
+}
+.career-card h4{
+  font-family: var(--serif-ja); font-size: 19px; font-weight: 600; margin-bottom: 16px;
+}
+.career-card ul{ list-style: none; }
+.career-card li{
+  font-size: 14px; color: var(--ink-soft); padding: 6px 0 6px 18px; position: relative;
+  line-height: 1.6;
+}
+.career-card li::before{
+  content:""; position:absolute; left: 0; top: 14px; width: 8px; height: 1px; background: var(--pink-deep);
+}
+
+/* ribbon divider, used 1-2 places only */
+.divider-ribbon{
+  display:flex; align-items:center; justify-content:center; gap: 20px;
+  margin: 0 auto 56px; max-width: 320px;
+}
+.divider-ribbon .line{ flex: 1; height: 1px; background: var(--line-strong); }
+.divider-ribbon svg{ width: 32px; height: 26px; color: var(--pink-deep); }
+
+/* ---------- WORKS ---------- */
+.works-grid{
+  display:grid; grid-template-columns: 1fr 1fr; gap: 32px;
+}
+.work-card{
+  position:relative; overflow: hidden; border-radius: 4px;
+  border: 1px solid var(--line); background: var(--bg);
+  transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease;
+  display:flex; flex-direction: column;
+}
+.work-card:hover{ transform: translateY(-4px); border-color: var(--line-strong); box-shadow: 0 24px 50px -28px rgba(42,36,33,.18); }
+.work-thumb{
+  aspect-ratio: 16/10;
+  background: linear-gradient(150deg, var(--bg-pink) 0%, #fff 60%, var(--bg-soft) 100%);
+  position: relative; overflow: hidden;
+  border-bottom: 1px solid var(--line);
+}
+.work-thumb.has-image{ background: var(--bg-soft); }
+.work-thumb.has-image img{
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: top center;
+  display: block;
+}
+.work-thumb.has-image::after{
+  content:""; position:absolute; inset:0;
+  background: linear-gradient(180deg, transparent 60%, rgba(42,36,33,.04));
+  pointer-events: none;
+}
+.work-thumb .mock{
+  position:absolute; inset: 24px 24px auto 24px; bottom: 24px;
+  background: #fff; border: 1px solid var(--line); border-radius: 4px;
+  display:flex; flex-direction:column;
+  box-shadow: 0 20px 40px -22px rgba(209,122,137,.25);
+  overflow: hidden;
+}
+.work-thumb .mock .bar{ height: 22px; background: #faf4f6; display:flex; align-items:center; gap: 4px; padding: 0 8px; border-bottom: 1px solid var(--line); }
+.work-thumb .mock .dot{ width: 7px; height: 7px; border-radius:50%; background: var(--pink-soft); }
+.work-thumb .mock .dot:nth-child(2){ background: #f5e2d4; }
+.work-thumb .mock .dot:nth-child(3){ background: #ede1d4; }
+.work-thumb .mock .body{ flex:1; display:grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 10px; }
+.work-thumb .mock .body .col{ background: linear-gradient(180deg, var(--bg-pink), #fff); border-radius: 2px; position:relative; overflow:hidden; }
+.work-thumb .mock .body .col::after{
+  content:""; position: absolute; inset: auto 12% 14% 12%; height: 6px;
+  background: var(--pink-soft); border-radius: 1px;
+}
+.work-thumb .mock .body .col.right{ background: linear-gradient(180deg, #fff, var(--bg-soft)); }
+.work-thumb .placeholder-tag{
+  position: absolute; top: 16px; left: 16px;
+  font-family: var(--mono); font-size: 10px; letter-spacing: .14em; color: var(--ink-mute);
+  background: rgba(253,252,250,.8); border: 1px solid var(--line); padding: 4px 8px; border-radius: 2px;
+}
+
+.work-thumb.coming{
+  background: repeating-linear-gradient(135deg, var(--bg-soft) 0 12px, var(--bg) 12px 24px);
+  display:flex; align-items:center; justify-content:center;
+}
+.work-thumb.coming .badge{
+  background: var(--bg); border: 1px solid var(--line-strong); padding: 14px 24px; border-radius: 999px;
+  font-family: var(--serif-en); font-style: italic; color: var(--ink-soft);
+}
+.work-thumb.coming .badge .num{ color: var(--pink-deep); margin-left: 6px; }
+
+.work-meta{ padding: 28px 28px 32px; }
+.work-meta .row{
+  display:flex; justify-content:space-between; align-items:center; margin-bottom: 14px;
+  font-family: var(--mono); font-size: 11px; letter-spacing: .14em; color: var(--ink-mute);
+}
+.work-meta h3{
+  font-family: var(--serif-ja); font-size: 22px; font-weight: 600; margin-bottom: 10px; letter-spacing: .01em;
+}
+.work-meta p{ font-size: 14px; color: var(--ink-soft); margin-bottom: 18px; }
+.work-tags{ display:flex; flex-wrap: wrap; gap: 6px; margin-bottom: 22px; }
+.work-tag{
+  font-size: 11px; letter-spacing: .08em;
+  padding: 4px 10px; border-radius: 999px;
+  background: var(--bg-pink); color: var(--pink-deep);
+}
+.work-link{
+  display:inline-flex; align-items:center; gap: 8px;
+  font-family: var(--serif-en); font-style: italic; font-size: 16px;
+  color: var(--ink);
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 2px;
+  transition: color .25s ease, border-color .25s ease;
+}
+.work-link:hover{ color: var(--pink-deep); border-color: var(--pink-deep); }
+
+/* ---------- SKILLS ---------- */
+.skills-grid{
+  display:grid; grid-template-columns: 240px 1fr; gap: 60px;
+}
+.skills-side{ position: sticky; top: 120px; }
+.skills-side h3{
+  font-family: var(--serif-ja); font-size: 20px; font-weight: 600; margin-bottom: 14px;
+}
+.skills-side p{ font-size: 13px; color: var(--ink-soft); }
+.skills-list{ display:flex; flex-direction:column; gap: 6px; }
+.skill-cat{
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--bg);
+  overflow: hidden;
+}
+.skill-cat-head{
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 22px 28px; cursor: pointer; gap: 20px;
+  transition: background .25s ease;
+}
+.skill-cat-head:hover{ background: var(--bg-soft); }
+.skill-cat-head .label{
+  display:flex; align-items:center; gap: 16px;
+}
+.skill-cat-head .idx{
+  font-family: var(--serif-en); font-style: italic; color: var(--pink-deep); font-size: 16px;
+  min-width: 26px;
+}
+.skill-cat-head .name{ font-family: var(--serif-ja); font-size: 19px; font-weight: 500; }
+.skill-cat-head .count{ font-family: var(--mono); font-size: 11px; color: var(--ink-mute); letter-spacing:.14em; }
+.skill-cat-head .chev{
+  width: 12px; height: 12px; border-right: 1.5px solid var(--ink-soft); border-bottom: 1.5px solid var(--ink-soft);
+  transform: rotate(45deg); transition: transform .35s ease; margin-bottom: 4px;
+}
+.skill-cat.open .skill-cat-head .chev{ transform: rotate(-135deg); margin-bottom: -4px; }
+.skill-cat-body{
+  display:grid; grid-template-rows: 0fr; transition: grid-template-rows .4s ease;
+}
+.skill-cat-body > div{ overflow: hidden; }
+.skill-cat.open .skill-cat-body{ grid-template-rows: 1fr; }
+.skill-cat-inner{
+  padding: 0 28px 28px;
+  display:flex; flex-wrap: wrap; gap: 10px;
+}
+.skill-chip{
+  font-size: 13px; padding: 8px 16px; border-radius: 999px;
+  background: var(--bg-pink); color: var(--pink-deep);
+  border: 1px solid transparent;
+  transition: background .2s ease, color .2s ease, border-color .2s ease;
+}
+.skill-chip.alt{ background: var(--bg); border-color: var(--line); color: var(--ink-soft); }
+.skill-chip:hover{ background: var(--pink); color: #fff; }
+.skill-chip.alt:hover{ background: var(--bg-soft); color: var(--ink); border-color: var(--line-strong); }
+
+/* ---------- TRUST ---------- */
+.trust-row{
+  display:grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+}
+.trust-card{
+  padding: 36px 28px;
+  background: var(--bg); border: 1px solid var(--line); border-radius: 4px;
+  position: relative;
+  transition: border-color .3s ease;
+}
+.trust-card:hover{ border-color: var(--pink); }
+.trust-card .ico{
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--bg-pink); color: var(--pink-deep);
+  display:flex; align-items:center; justify-content:center;
+  font-family: var(--serif-en); font-style: italic; font-size: 18px;
+  margin-bottom: 22px;
+}
+.trust-card .head{
+  font-family: var(--serif-ja); font-size: 16px; font-weight: 600; margin-bottom: 10px;
+}
+.trust-card .desc{ font-size: 13px; color: var(--ink-soft); line-height: 1.7; }
+
+/* ---------- WORK ENVIRONMENT ---------- */
+.env-grid{
+  display:grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start;
+}
+.env-list{ display:flex; flex-direction: column; }
+.env-row{
+  display:grid; grid-template-columns: 180px 1fr; gap: 32px;
+  padding: 24px 0; border-top: 1px solid var(--line);
+  align-items: start;
+}
+.env-row:last-child{ border-bottom: 1px solid var(--line); }
+.env-row .k{
+  font-family: var(--serif-en); font-style: italic; color: var(--pink-deep); font-size: 16px;
+  display:flex; align-items:baseline; gap: 8px;
+}
+.env-row .k .num{ font-family: var(--serif-en); font-style: italic; color: var(--ink-mute); font-size: 13px; }
+.env-row .v{ font-size: 15px; color: var(--ink-soft); line-height: 1.85; }
+.env-row .v strong{ color: var(--ink); font-weight: 600; }
+
+.env-callout{
+  padding: 40px;
+  background: var(--bg); border: 1px solid var(--line);
+  border-radius: 4px;
+  position: relative;
+}
+.env-callout::before{
+  content:""; position:absolute; inset: 8px; border: 1px solid var(--bg-pink); border-radius: 2px; pointer-events: none;
+}
+.env-callout .quote-mark{
+  font-family: var(--serif-en); font-style: italic; font-size: 80px; line-height: .7;
+  color: var(--pink); margin-bottom: 16px;
+}
+.env-callout p{
+  font-family: var(--serif-ja); font-size: 22px; line-height: 1.7; font-weight: 500; color: var(--ink);
+}
+.env-callout .attr{
+  margin-top: 28px; font-family: var(--serif-en); font-style: italic; color: var(--ink-mute); font-size: 14px;
+  display:flex; align-items:center; gap: 12px;
+}
+.env-callout .attr::before{ content:""; width: 32px; height: 1px; background: var(--line-strong); }
+
+/* ---------- CONTACT ---------- */
+.contact{
+  padding: 140px 0;
+  background: var(--ink); color: var(--bg);
+  position: relative; overflow: hidden;
+}
+.contact::before{
+  content:""; position:absolute; right: -10%; top: -20%; width: 60%; height: 140%;
+  background: radial-gradient(50% 50%, rgba(232,165,176,.18), transparent 60%);
+  pointer-events: none;
+}
+.contact .wrap{ position: relative; z-index: 1; }
+.contact .eyebrow{ color: var(--pink); }
+.contact h2{
+  font-family: var(--serif-ja); font-size: clamp(40px, 5.4vw, 88px);
+  line-height: 1.15; margin-top: 24px; margin-bottom: 40px; font-weight: 500;
+  max-width: 22ch;
+}
+.contact h2 em{ font-family: var(--serif-en); font-style: italic; color: var(--pink); }
+.contact-sub{ max-width: 560px; color: rgba(253,252,250,.7); font-size: 16px; line-height: 1.85; margin-bottom: 56px; }
+
+.contact-grid{
+  display:grid; grid-template-columns: 1.4fr 1fr; gap: 60px; align-items: end;
+}
+.contact-cta{
+  display:inline-flex; align-items:center; gap: 14px;
+  padding: 22px 34px; border-radius: 999px;
+  background: var(--pink); color: var(--ink);
+  font-size: 15px; letter-spacing: .08em;
+  transition: background .25s ease, transform .25s ease, color .25s ease;
+}
+.contact-cta:hover{ background: var(--bg); color: var(--ink); transform: translateY(-2px); }
+.contact-cta .arrow{ transition: transform .25s ease; }
+.contact-cta:hover .arrow{ transform: translateX(6px); }
+
+.contact-channels{ display:flex; flex-direction:column; gap: 4px; }
+.channel{
+  display:flex; align-items:center; justify-content:space-between; gap: 20px;
+  padding: 22px 0; border-top: 1px solid rgba(253,252,250,.12);
+  transition: padding .25s ease;
+}
+.channel:last-child{ border-bottom: 1px solid rgba(253,252,250,.12); }
+.channel:hover{ padding-left: 8px; }
+.channel .k{
+  font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: rgba(253,252,250,.5);
+}
+.channel .v{
+  font-family: var(--serif-en); font-style: italic; font-size: 18px;
+  color: var(--bg);
+}
+.channel:hover .v{ color: var(--pink); }
+
+/* ---------- FOOTER ---------- */
+.footer{
+  background: var(--ink); color: rgba(253,252,250,.6);
+  border-top: 1px solid rgba(253,252,250,.08);
+  padding: 50px 0 38px;
+  position: relative;
+}
+.footer .wrap{
+  display:flex; justify-content:space-between; align-items:center; gap: 24px;
+}
+.footer .brand-foot{ display:flex; align-items:center; gap: 12px; color: var(--bg); }
+.footer .brand-foot .logo{ font-family: var(--serif-en); font-size: 22px; }
+.footer .brand-foot .bunny{ width: 20px; height: 20px; color: var(--taupe); opacity:.85; }
+.footer .small{ font-size: 12px; letter-spacing: .12em; }
+.footer .small em{ font-family: var(--serif-en); font-style: italic; color: var(--pink); }
+
+/* ---------- Tweaks (vanilla) ---------- */
+.tweaks{
+  position: fixed; right: 20px; bottom: 20px; z-index: 9999;
+  width: 280px;
+  background: var(--bg);
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  box-shadow: 0 30px 60px -20px rgba(42,36,33,.25);
+  font-family: var(--sans-ja); font-size: 13px;
+  display: none;
+}
+.tweaks.show{ display:block; }
+.tweaks .tw-head{
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 14px 16px; border-bottom: 1px solid var(--line);
+  font-family: var(--serif-en); font-style: italic; font-size: 16px;
+}
+.tweaks .tw-close{ width:24px; height:24px; border-radius: 50%; display:flex; align-items:center; justify-content:center; color: var(--ink-mute); }
+.tweaks .tw-close:hover{ background: var(--bg-soft); color: var(--ink); }
+.tweaks .tw-body{ padding: 14px 16px 18px; }
+.tweaks .tw-section{ margin-bottom: 14px; }
+.tweaks .tw-section:last-child{ margin-bottom: 0; }
+.tweaks .tw-label{ font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: 10px; }
+.tweaks .tw-swatches{ display:flex; gap: 8px; flex-wrap: wrap; }
+.tweaks .swatch{
+  width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--line);
+  cursor: pointer; position: relative;
+  transition: transform .2s ease, border-color .2s ease;
+}
+.tweaks .swatch:hover{ transform: scale(1.06); }
+.tweaks .swatch.active{ border-color: var(--ink); }
+.tweaks .swatch.active::after{
+  content:""; position:absolute; inset:-4px; border:1px solid var(--ink); border-radius: 10px;
+}
+.tweaks .tw-toggle{
+  display:flex; align-items:center; justify-content:space-between; gap: 12px;
+}
+.tweaks .tw-switch{
+  width: 38px; height: 22px; border-radius: 999px; background: var(--line-strong);
+  position: relative; transition: background .25s ease;
+}
+.tweaks .tw-switch::after{
+  content:""; position:absolute; top: 2px; left: 2px; width: 18px; height: 18px;
+  background: #fff; border-radius: 50%; transition: transform .25s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,.18);
+}
+.tweaks .tw-switch.on{ background: var(--pink-deep); }
+.tweaks .tw-switch.on::after{ transform: translateX(16px); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 980px){
+  .nav, .header .cta-btn{ display:none; }
+  .hamburger{ display: flex; }
+  .section{ padding: 80px 0; }
+  .hero{ padding: 140px 0 80px; }
+  .hero-grid{ grid-template-columns: 1fr; gap: 40px; }
+  .hero-side{ border-left: 0; border-top: 1px solid var(--line); padding: 24px 0 0; }
+  .hero-floating-bunny{ top: -28px; right: 8px; width: 44px; height: 44px; }
+  .section-head{ flex-direction: column; align-items: flex-start; gap: 16px; }
+  .about-grid{ grid-template-columns: 1fr; gap: 40px; }
+  .about-portrait{ max-width: 360px; }
+  .stats-grid{ grid-template-columns: 1fr; }
+  .stat{ border-right: 0; border-bottom: 1px solid var(--line); }
+  .stat:last-child{ border-bottom: 0; }
+  .career-detail{ grid-template-columns: 1fr; }
+  .works-grid{ grid-template-columns: 1fr; }
+  .skills-grid{ grid-template-columns: 1fr; gap: 32px; }
+  .skills-side{ position: static; }
+  .trust-row{ grid-template-columns: 1fr 1fr; }
+  .env-grid{ grid-template-columns: 1fr; gap: 32px; }
+  .env-row{ grid-template-columns: 1fr; gap: 8px; }
+  .contact{ padding: 80px 0; }
+  .contact-grid{ grid-template-columns: 1fr; gap: 32px; }
+  .footer .wrap{ flex-direction: column; gap: 14px; text-align:center; }
+}
+@media (max-width: 540px){
+  .trust-row{ grid-template-columns: 1fr; }
+  .tweaks{ width: calc(100vw - 32px); right: 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header" id="header" data-screen-label="01 Header">
+  <div class="wrap">
+    <a href="#top" class="brand" aria-label="Pino — home">
+      <!-- bunny silhouette next to logo (1 of 3 spots) -->
+      <svg class="bunny" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
+        <path d="M22 4c2 0 3.6 1.4 4.4 3.6L29 18c1-.4 2-.6 3-.6s2 .2 3 .6l2.6-10.4C38.4 5.4 40 4 42 4c2.8 0 5 2.4 5 5.4 0 1.2-.4 5.6-1.6 11C50 23 53 28.4 53 34.6 53 45.4 43.6 54 32 54S11 45.4 11 34.6c0-6.2 3-11.6 7.6-14.2C17.4 15 17 10.6 17 9.4 17 6.4 19.2 4 22 4z"/>
+        <circle cx="26" cy="36" r="2" fill="#FBEEF1"/>
+        <circle cx="38" cy="36" r="2" fill="#FBEEF1"/>
+        <ellipse cx="32" cy="42" rx="2.4" ry="1.6" fill="#E8A5B0"/>
+      </svg>
+      <span class="logo">Pino</span>
+      <!-- single small ribbon (1 of 2 ribbon spots) -->
+      <svg class="ribbon" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+        <path d="M16 14c-3-4-7-6-10-4-2 1.4-2 4 0 6 1.6 1.6 5 2 7 2-2 0-5.4.4-7 2-2 2-2 4.6 0 6 3 2 7 0 10-4 3 4 7 6 10 4 2-1.4 2-4 0-6-1.6-1.6-5-2-7-2 2 0 5.4-.4 7-2 2-2 2-4.6 0-6-3-2-7 0-10 4z" opacity=".9"/>
+        <circle cx="16" cy="14" r="2" fill="#FDFCFA"/>
+      </svg>
+      <span class="tag">Frontend / LP</span>
+    </a>
+    <nav class="nav" aria-label="primary">
+      <a href="#about"><span class="n">01</span>About</a>
+      <a href="#career"><span class="n">02</span>Career</a>
+      <a href="#works"><span class="n">03</span>Works</a>
+      <a href="#skills"><span class="n">04</span>Skills</a>
+      <a href="#contact"><span class="n">05</span>Contact</a>
+    </nav>
+    <a href="#contact" class="cta-btn">Get in touch</a>
+    <button class="hamburger" id="hamb" aria-label="menu"><span></span></button>
+  </div>
+</header>
+<div class="mobile-menu" id="mob">
+  <a href="#about"><span class="n">01</span>About</a>
+  <a href="#career"><span class="n">02</span>Career</a>
+  <a href="#works"><span class="n">03</span>Works</a>
+  <a href="#skills"><span class="n">04</span>Skills</a>
+  <a href="#contact"><span class="n">05</span>Contact</a>
+</div>
+
+<!-- ===== HERO ===== -->
+<main id="top">
+<section class="hero" data-screen-label="02 Hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-meta reveal">
+          <span class="dot"></span>
+          <span>26歳 · 女性フロントエンドエンジニア</span>
+          <span class="line-x"></span>
+          <span>Tokyo / Remote · 2026</span>
+        </div>
+        <h1 class="reveal delay-1">
+          <span class="stroke">高品質LP</span><span class="accent">、</span><br/>
+          最速スピードで<br/>
+          <span class="accent">請け負います。</span>
+        </h1>
+        <p class="hero-sub reveal delay-2">
+          デザイン + コーディングを一貫対応。動画編集2年で培ったセンスと心理学の知見で、<strong style="color:var(--ink);font-weight:600">女性目線・伝わるLP</strong>を、丁寧に・最短納期でお届けします。
+        </p>
+        <div class="hero-actions reveal delay-3">
+          <a href="#works" class="btn-primary">
+            <span>Works を見る</span>
+            <span class="arrow">→</span>
+          </a>
+          <a href="#contact" class="btn-ghost">
+            <span>お問い合わせ</span>
+          </a>
+        </div>
+      </div>
+
+      <aside class="hero-side reveal delay-2">
+        <svg class="hero-floating-bunny" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
+          <path d="M22 4c2 0 3.6 1.4 4.4 3.6L29 18c1-.4 2-.6 3-.6s2 .2 3 .6l2.6-10.4C38.4 5.4 40 4 42 4c2.8 0 5 2.4 5 5.4 0 1.2-.4 5.6-1.6 11C50 23 53 28.4 53 34.6 53 45.4 43.6 54 32 54S11 45.4 11 34.6c0-6.2 3-11.6 7.6-14.2C17.4 15 17 10.6 17 9.4 17 6.4 19.2 4 22 4z" opacity=".9"/>
+        </svg>
+        <div class="kv">
+          <span class="k">YouTube 編集</span>
+          <span class="v"><span class="num">60,000</span>登録者まで成長</span>
+        </div>
+        <div class="kv">
+          <span class="k">案件評価</span>
+          <span class="v"><span class="num">★5</span>全案件 100%維持</span>
+        </div>
+        <div class="kv">
+          <span class="k">納期</span>
+          <span class="v"><span class="num">最短</span>スピード納品で対応</span>
+        </div>
+        <div class="kv">
+          <span class="k">対応</span>
+          <span class="v">フルリモート / 昼夜・土日</span>
+        </div>
+        <div class="kv">
+          <span class="k">専門</span>
+          <span class="v">HTML / CSS / JS / PHP / Figma</span>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TICKER ===== -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-row wrap">
+    <div class="ticker-item"><span class="star">★★★★★</span> 100% 評価</div>
+    <span class="sep"></span>
+    <div class="ticker-item">YouTube 0 → 60,000</div>
+    <span class="sep"></span>
+    <div class="ticker-item">最短スピード納品</div>
+    <span class="sep"></span>
+    <div class="ticker-item">心理学 × デザイン</div>
+    <span class="sep"></span>
+    <div class="ticker-item">レスポンシブ対応</div>
+    <span class="sep"></span>
+    <div class="ticker-item">フルリモート</div>
+  </div>
+</div>
+
+<!-- ===== ABOUT ===== -->
+<section class="section" id="about" data-screen-label="03 About">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow"><span class="num">01</span> — About</div>
+        <h2 class="section-title">自己紹介 <em>introduction</em></h2>
+      </div>
+      <div class="meta">file_01.md</div>
+    </div>
+    <div class="about-grid">
+      <figure class="about-portrait reveal">
+        <div class="ap-circle"></div>
+        <div class="ap-block"></div>
+        <div class="ap-noise"></div>
+        <div class="ap-mark">
+          <span class="ap-mark-num">No. 01 — Profile</span>
+          <span class="ap-mark-name">Pino<em>.</em></span>
+          <span class="ap-mark-role">26 / Frontend Engineer · Tokyo</span>
+        </div>
+        <p class="ap-tagline">高品質LPを<strong>最短スピード</strong>で<br/>請け負うフリーランス。</p>
+        <svg class="ap-bunny" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
+          <path d="M22 4c2 0 3.6 1.4 4.4 3.6L29 18c1-.4 2-.6 3-.6s2 .2 3 .6l2.6-10.4C38.4 5.4 40 4 42 4c2.8 0 5 2.4 5 5.4 0 1.2-.4 5.6-1.6 11C50 23 53 28.4 53 34.6 53 45.4 43.6 54 32 54S11 45.4 11 34.6c0-6.2 3-11.6 7.6-14.2C17.4 15 17 10.6 17 9.4 17 6.4 19.2 4 22 4z"/>
+        </svg>
+        <div class="frame"></div>
+        <figcaption class="caption">
+          <span>P.PINO / 2026</span>
+          <span>EDITORIAL MARK</span>
+        </figcaption>
+      </figure>
+
+      <div class="about-body reveal delay-1">
+        <p>動画編集を2年続ける中で培ったデザインセンスと、大学で学ぶ心理学の知識を活かし、<strong>女性目線からのコンテンツ制作</strong>を得意としています。</p>
+        <p>Figma / HTML / CSS / JavaScript / PHP を扱い、デザインから実装・納品まで一貫対応。<em style="color:var(--pink-deep);font-family:var(--serif-en);font-style:italic;">速く、丁寧に、満足度 100%</em>を目指して制作しています。</p>
+        <p>クライアントの要望を正確に汲み取り、目的に合ったサイトをご提案するのが私の仕事です。慶應義塾大学通信教育課程（心理学専攻）にも在籍し、ユーザー心理に基づく UX 設計を磨き続けています。</p>
+        <div class="signature">
+          <span class="name">Pino</span>
+          <span class="role">Frontend Engineer · Designer</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CAREER / STATS ===== -->
+<section class="section alt" id="career" data-screen-label="04 Career">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow"><span class="num">02</span> — Career &amp; Results</div>
+        <h2 class="section-title">主な経歴と実績 <em>milestones</em></h2>
+      </div>
+      <div class="meta">2023 — Present</div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat reveal">
+        <div class="corner">/01</div>
+        <div class="label">YouTube 専属編集</div>
+        <div class="number"><span class="from">0</span><span class="arrow">→</span>60,000<span class="suffix">人</span></div>
+        <div class="desc">2年以上の専属編集者として、登録者ゼロから6万人まで成長を伴走。女性目線でのコンテンツ企画・編集。</div>
+      </div>
+      <div class="stat reveal delay-1">
+        <div class="corner">/02</div>
+        <div class="label">案件サイト評価</div>
+        <div class="number">★5<span class="suffix">／全案件</span></div>
+        <div class="desc">複数の単発案件で★5を100%維持。クライアント満足度100%。高速かつ丁寧な進行を継続中。</div>
+      </div>
+      <div class="stat reveal delay-2">
+        <div class="corner">/03</div>
+        <div class="label">レスポンス</div>
+        <div class="number">24<span class="suffix">時間以内</span></div>
+        <div class="desc">基本1日以内にメッセージを返信。納期厳守・フルリモート、昼夜・土日も柔軟に稼働します。</div>
+      </div>
+    </div>
+
+    <div class="career-detail">
+      <article class="career-card reveal">
+        <div class="yr">2023 — 2025</div>
+        <h4>YouTubeチャンネル運営</h4>
+        <ul>
+          <li>2年以上の専属動画編集者</li>
+          <li>登録者 0人 → 60,000人 達成</li>
+          <li>女性目線のコンテンツ企画</li>
+          <li>クライアント対応・進行管理</li>
+        </ul>
+      </article>
+      <article class="career-card reveal delay-1">
+        <div class="yr">2024 — 現在</div>
+        <h4>フリーランス LP 制作</h4>
+        <ul>
+          <li>案件サイト評価 ★5 を維持（100%）</li>
+          <li>デザイン〜コーディングまで一貫対応</li>
+          <li>納期厳守・満足度100%</li>
+          <li>フルリモート対応</li>
+        </ul>
+      </article>
+      <article class="career-card reveal delay-2">
+        <div class="yr">在籍中</div>
+        <h4>慶應義塾大学（通信）</h4>
+        <ul>
+          <li>心理学専攻</li>
+          <li>仕事を最優先、学習と業務を両立</li>
+          <li>ユーザー心理の理解を実務に活用</li>
+          <li>UX 設計への応用</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WORKS ===== -->
+<section class="section" id="works" data-screen-label="05 Works">
+  <div class="wrap">
+
+    <!-- ribbon divider (2 of 2 ribbon spots) -->
+    <div class="divider-ribbon reveal" aria-hidden="true">
+      <span class="line"></span>
+      <svg viewBox="0 0 40 32" fill="currentColor">
+        <path d="M20 16c-4-5-9-7-13-5-2.6 1.6-2.6 5.4 0 7 2 1.4 6 2 8 2-2 0-6 .6-8 2-2.6 1.6-2.6 5.4 0 7 4 2 9 0 13-5 4 5 9 7 13 5 2.6-1.6 2.6-5.4 0-7-2-1.4-6-2-8-2 2 0 6-.6 8-2 2.6-1.6 2.6-5.4 0-7-4-2-9 0-13 5z"/>
+        <circle cx="20" cy="16" r="2.4" fill="#FDFCFA"/>
+      </svg>
+      <span class="line"></span>
+    </div>
+
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow"><span class="num">03</span> — Works</div>
+        <h2 class="section-title">ポートフォリオ作品 <em>selected works</em></h2>
+      </div>
+      <div class="meta">2 entries / 1 in progress</div>
+    </div>
+
+    <div class="works-grid">
+      <article class="work-card reveal">
+        <div class="work-thumb has-image">
+          <img src="assets/work-skincare-lp.png" alt="女性向けスキンケア LP テンプレート" />
+        </div>
+        <div class="work-meta">
+          <div class="row">
+            <span>WORK / 001</span>
+            <span>2025</span>
+          </div>
+          <h3>女性向けスキンケア LP テンプレート</h3>
+          <p>高級美容液の販売ページ。淡いピンク × ゴールドで高級感を表現。ビフォーアフター、成分紹介、口コミ、料金プランなど一般的なLP要素をカバー。</p>
+          <div class="work-tags">
+            <span class="work-tag">HTML</span>
+            <span class="work-tag">CSS</span>
+            <span class="work-tag">JavaScript</span>
+            <span class="work-tag">スクロール出現</span>
+            <span class="work-tag">FAQ開閉</span>
+            <span class="work-tag">レスポンシブ</span>
+          </div>
+          <a href="./Luminous Glow LP.html" class="work-link">
+            <span>デモサイトを見る</span>
+            <span>→</span>
+          </a>
+        </div>
+      </article>
+
+      <article class="work-card reveal delay-1">
+        <div class="work-thumb coming">
+          <span class="badge">Coming <span class="num">2026 / 07</span></span>
+        </div>
+        <div class="work-meta">
+          <div class="row">
+            <span>WORK / 002</span>
+            <span>準備中</span>
+          </div>
+          <h3>SaaS LP テンプレート（準備中）</h3>
+          <p>BtoB SaaS 向けランディングページ。コンバージョンを最大化する情報設計と、心理学を踏まえたコピー&amp;マイクロインタラクションを予定。</p>
+          <div class="work-tags">
+            <span class="work-tag">TBD</span>
+            <span class="work-tag">2026 / 07 公開予定</span>
+          </div>
+          <span class="work-link" style="border-color:var(--line-strong);color:var(--ink-mute);cursor:default">
+            <span>Coming soon</span>
+            <span>—</span>
+          </span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SKILLS ===== -->
+<section class="section alt" id="skills" data-screen-label="06 Skills">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow"><span class="num">04</span> — Skills</div>
+        <h2 class="section-title">スキル・技術スタック <em>toolbox</em></h2>
+      </div>
+      <div class="meta">4 categories</div>
+    </div>
+
+    <div class="skills-grid">
+      <aside class="skills-side reveal">
+        <h3>制作の軸</h3>
+        <p>デザインから実装、納品まで一貫対応。心理学の知見を UI/UX に応用し、伝わる・売れる LP を制作します。</p>
+      </aside>
+
+      <div class="skills-list">
+        <div class="skill-cat open reveal">
+          <button class="skill-cat-head" aria-expanded="true">
+            <span class="label">
+              <span class="idx">01</span>
+              <span class="name">フロントエンド開発</span>
+            </span>
+            <span style="display:flex;align-items:center;gap:18px;">
+              <span class="count">03 items</span>
+              <span class="chev"></span>
+            </span>
+          </button>
+          <div class="skill-cat-body"><div><div class="skill-cat-inner">
+            <span class="skill-chip">HTML5</span>
+            <span class="skill-chip">CSS3</span>
+            <span class="skill-chip">JavaScript</span>
+            <span class="skill-chip alt">レスポンシブデザイン</span>
+            <span class="skill-chip alt">スクロール演出</span>
+            <span class="skill-chip alt">アニメーション</span>
+          </div></div></div>
+        </div>
+
+        <div class="skill-cat reveal delay-1">
+          <button class="skill-cat-head" aria-expanded="false">
+            <span class="label">
+              <span class="idx">02</span>
+              <span class="name">バックエンド</span>
+            </span>
+            <span style="display:flex;align-items:center;gap:18px;">
+              <span class="count">01 item</span>
+              <span class="chev"></span>
+            </span>
+          </button>
+          <div class="skill-cat-body"><div><div class="skill-cat-inner">
+            <span class="skill-chip">PHP</span>
+            <span class="skill-chip alt">フォーム実装</span>
+            <span class="skill-chip alt">簡易動的処理</span>
+          </div></div></div>
+        </div>
+
+        <div class="skill-cat reveal delay-2">
+          <button class="skill-cat-head" aria-expanded="false">
+            <span class="label">
+              <span class="idx">03</span>
+              <span class="name">デザイン・プロトタイプ</span>
+            </span>
+            <span style="display:flex;align-items:center;gap:18px;">
+              <span class="count">03 items</span>
+              <span class="chev"></span>
+            </span>
+          </button>
+          <div class="skill-cat-body"><div><div class="skill-cat-inner">
+            <span class="skill-chip">Figma</span>
+            <span class="skill-chip">Canva</span>
+            <span class="skill-chip">Studio</span>
+            <span class="skill-chip alt">ワイヤーフレーム</span>
+            <span class="skill-chip alt">デザインカンプ</span>
+            <span class="skill-chip alt">ノーコード制作</span>
+          </div></div></div>
+        </div>
+
+        <div class="skill-cat reveal delay-3">
+          <button class="skill-cat-head" aria-expanded="false">
+            <span class="label">
+              <span class="idx">04</span>
+              <span class="name">その他 / ソフトスキル</span>
+            </span>
+            <span style="display:flex;align-items:center;gap:18px;">
+              <span class="count">04 items</span>
+              <span class="chev"></span>
+            </span>
+          </button>
+          <div class="skill-cat-body"><div><div class="skill-cat-inner">
+            <span class="skill-chip">Git / GitHub</span>
+            <span class="skill-chip alt">要件ヒアリング</span>
+            <span class="skill-chip alt">UX 設計</span>
+            <span class="skill-chip alt">心理学的アプローチ</span>
+            <span class="skill-chip alt">迅速なレスポンス</span>
+          </div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TRUST ===== -->
+<section class="section" id="trust" data-screen-label="07 Trust">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow"><span class="num">05</span> — Trust Signals</div>
+        <h2 class="section-title">信頼の根拠 <em>why pino</em></h2>
+      </div>
+      <div class="meta">5 commitments</div>
+    </div>
+
+    <div class="trust-row">
+      <div class="trust-card reveal">
+        <div class="ico">i</div>
+        <div class="head">YouTube 0→6万人</div>
+        <div class="desc">2年以上のコンテンツ運用。女性目線で「伸ばす」設計に強み。</div>
+      </div>
+      <div class="trust-card reveal delay-1">
+        <div class="ico">ii</div>
+        <div class="head">★5 100% 達成</div>
+        <div class="desc">案件サイトで全案件★5を維持。高水準なクオリティを継続。</div>
+      </div>
+      <div class="trust-card reveal delay-2">
+        <div class="ico">iii</div>
+        <div class="head">納期厳守</div>
+        <div class="desc">基本1日以内に返信。期限内に高品質な成果物を納品。</div>
+      </div>
+      <div class="trust-card reveal delay-3">
+        <div class="ico">iv</div>
+        <div class="head">フルリモート対応</div>
+        <div class="desc">昼夜・土日問わず柔軟に稼働。レスポンスが速い。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WORK ENVIRONMENT ===== -->
+<section class="section alt" id="env" data-screen-label="08 Environment">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow"><span class="num">06</span> — Setup &amp; Availability</div>
+        <h2 class="section-title">作業環境・対応 <em>working with me</em></h2>
+      </div>
+      <div class="meta">remote / flexible</div>
+    </div>
+
+    <div class="env-grid">
+      <div class="env-list reveal">
+        <div class="env-row">
+          <div class="k"><span class="num">01</span> 作業環境</div>
+          <div class="v">一人暮らしの自宅で<strong>フルリモート勤務</strong>。集中力が必要な開発作業に最適な環境を整えています。</div>
+        </div>
+        <div class="env-row">
+          <div class="k"><span class="num">02</span> 対応時間</div>
+          <div class="v">昼夜、土日問わず対応可能。納期に合わせて柔軟に稼働します。</div>
+        </div>
+        <div class="env-row">
+          <div class="k"><span class="num">03</span> 対応案件</div>
+          <div class="v">LP制作（デザイン+コーディング） / Figmaデザイン / HTML・CSS・JS・PHP 実装 / 女性目線からのデザイン提案。</div>
+        </div>
+        <div class="env-row">
+          <div class="k"><span class="num">04</span> レスポンス</div>
+          <div class="v">基本<strong>1日以内</strong>にメッセージ返信。要望を正確に把握し、迅速に対応します。</div>
+        </div>
+      </div>
+
+      <aside class="env-callout reveal delay-1">
+        <div class="quote-mark">“</div>
+        <p>ご要望を正確に把握し、期限内に高品質な成果物を納品することをお約束いたします。</p>
+        <div class="attr">Pino — Frontend Engineer</div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section class="contact" id="contact" data-screen-label="09 Contact">
+  <div class="wrap">
+    <div class="eyebrow reveal"><span class="num">07</span> — Contact</div>
+    <h2 class="reveal delay-1">プロジェクトのご相談を<br/><em>お待ちしています</em>。</h2>
+    <p class="contact-sub reveal delay-2">LP制作・Figmaデザイン・実装まで、まずはお気軽にお問い合わせください。<br/>ご要望を正確にヒアリングし、目的に合ったご提案を差し上げます。</p>
+
+    <div class="contact-grid">
+      <a href="mailto:freelancepino@gmail.com" class="contact-cta reveal delay-3">
+        <span>プロジェクトを依頼する</span>
+        <span class="arrow">→</span>
+      </a>
+
+      <div class="contact-channels reveal delay-4">
+        <a class="channel" href="mailto:freelancepino@gmail.com">
+          <span class="k">Email</span>
+          <span class="v">freelancepino@gmail.com</span>
+        </a>
+        <a class="channel" href="https://github.com/pino-freelance" target="_blank" rel="noopener">
+          <span class="k">GitHub</span>
+          <span class="v">github.com/pino-freelance</span>
+        </a>
+        <a class="channel" href="#">
+          <span class="k">X (Twitter)</span>
+          <span class="v">@[username]</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer" data-screen-label="10 Footer">
+  <div class="wrap">
+    <div class="brand-foot">
+      <!-- footer bunny (3 of 3 spots) — taupe -->
+      <svg class="bunny" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
+        <path d="M22 4c2 0 3.6 1.4 4.4 3.6L29 18c1-.4 2-.6 3-.6s2 .2 3 .6l2.6-10.4C38.4 5.4 40 4 42 4c2.8 0 5 2.4 5 5.4 0 1.2-.4 5.6-1.6 11C50 23 53 28.4 53 34.6 53 45.4 43.6 54 32 54S11 45.4 11 34.6c0-6.2 3-11.6 7.6-14.2C17.4 15 17 10.6 17 9.4 17 6.4 19.2 4 22 4z"/>
+      </svg>
+      <span class="logo">Pino</span>
+    </div>
+    <div class="small">© 2026 Pino — <em>Designed &amp; built with care.</em></div>
+    <div class="small" style="font-family:var(--mono);font-size:11px;">v1.0 · GitHub Pages ready</div>
+  </div>
+</footer>
+
+<!-- ===== TWEAKS PANEL (vanilla) ===== -->
+<aside class="tweaks" id="tweaks" aria-label="Tweaks">
+  <div class="tw-head">
+    <span>Tweaks</span>
+    <button class="tw-close" id="tw-close" aria-label="close">×</button>
+  </div>
+  <div class="tw-body">
+    <div class="tw-section">
+      <div class="tw-label">Accent palette</div>
+      <div class="tw-swatches" id="tw-palette"></div>
+    </div>
+    <div class="tw-section">
+      <div class="tw-toggle">
+        <span class="tw-label" style="margin:0;">Show bunny accents</span>
+        <button class="tw-switch on" id="tw-bunny" aria-label="toggle bunny"></button>
+      </div>
+    </div>
+    <div class="tw-section">
+      <div class="tw-toggle">
+        <span class="tw-label" style="margin:0;">Show ribbon divider</span>
+        <button class="tw-switch on" id="tw-ribbon" aria-label="toggle ribbon"></button>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<script>
+// === TWEAKS DEFAULTS ===
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "palette": "rose",
+  "showBunny": true,
+  "showRibbon": true
+}/*EDITMODE-END*/;
+
+(function(){
+  // ---------- Header scroll state ----------
+  const header = document.getElementById('header');
+  const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 12);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // ---------- Hamburger menu ----------
+  const hamb = document.getElementById('hamb');
+  const mob = document.getElementById('mob');
+  hamb.addEventListener('click', () => {
+    const open = !hamb.classList.contains('open');
+    hamb.classList.toggle('open', open);
+    mob.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+  mob.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    hamb.classList.remove('open'); mob.classList.remove('open'); document.body.style.overflow = '';
+  }));
+
+  // ---------- Scroll reveal ----------
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // ---------- Skill accordion ----------
+  document.querySelectorAll('.skill-cat-head').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const cat = btn.closest('.skill-cat');
+      const open = !cat.classList.contains('open');
+      cat.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', open);
+    });
+  });
+
+  // ---------- Smooth-scroll for in-page anchors (header offset) ----------
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const id = a.getAttribute('href');
+      if (id.length <= 1) return;
+      const target = document.querySelector(id);
+      if (!target) return;
+      e.preventDefault();
+      const y = target.getBoundingClientRect().top + window.scrollY - 68;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    });
+  });
+
+  // ---------- TWEAKS (vanilla impl following host protocol) ----------
+  const palettes = {
+    rose:    { pink: '#E8A5B0', pinkDeep: '#D17A89', pinkSoft: '#F6D7DC', bgPink: '#FBEEF1', taupe: '#C9A88B', taupeDeep: '#9C7E62' },
+    sakura:  { pink: '#F2B7C7', pinkDeep: '#D88AA0', pinkSoft: '#FCE0E8', bgPink: '#FDF1F4', taupe: '#D7BFA5', taupeDeep: '#A48A6E' },
+    peach:   { pink: '#E9A88E', pinkDeep: '#C8765A', pinkSoft: '#F4D5C6', bgPink: '#FBEFE7', taupe: '#C7A485', taupeDeep: '#967557' },
+    lilac:   { pink: '#C9A8D1', pinkDeep: '#9E7AB0', pinkSoft: '#E6D6EC', bgPink: '#F4ECF6', taupe: '#BDA8C7', taupeDeep: '#8E7398' }
+  };
+  const state = Object.assign({}, TWEAK_DEFAULTS);
+
+  function applyPalette(name){
+    const p = palettes[name] || palettes.rose;
+    const r = document.documentElement;
+    r.style.setProperty('--pink', p.pink);
+    r.style.setProperty('--pink-deep', p.pinkDeep);
+    r.style.setProperty('--pink-soft', p.pinkSoft);
+    r.style.setProperty('--bg-pink', p.bgPink);
+    r.style.setProperty('--taupe', p.taupe);
+    r.style.setProperty('--taupe-deep', p.taupeDeep);
+  }
+  function applyBunny(show){
+    document.querySelectorAll('.brand .bunny, .hero-floating-bunny, .footer .bunny, .ap-bunny')
+      .forEach(el => el.style.display = show ? '' : 'none');
+  }
+  function applyRibbon(show){
+    document.querySelectorAll('.brand .ribbon, .divider-ribbon').forEach(el => el.style.display = show ? '' : 'none');
+  }
+  function applyAll(){
+    applyPalette(state.palette);
+    applyBunny(state.showBunny !== false);
+    applyRibbon(state.showRibbon !== false);
+  }
+  applyAll();
+
+  // -- Tweaks UI --
+  const pal = document.getElementById('tw-palette');
+  Object.entries(palettes).forEach(([name, p]) => {
+    const sw = document.createElement('button');
+    sw.className = 'swatch' + (state.palette === name ? ' active' : '');
+    sw.title = name;
+    sw.style.background = `linear-gradient(135deg, ${p.pinkDeep} 0 50%, ${p.taupeDeep} 50% 100%)`;
+    sw.addEventListener('click', () => {
+      state.palette = name;
+      applyPalette(name);
+      [...pal.children].forEach(c => c.classList.remove('active'));
+      sw.classList.add('active');
+      persist({ palette: name });
+    });
+    pal.appendChild(sw);
+  });
+  const bunnyBtn = document.getElementById('tw-bunny');
+  const ribbonBtn = document.getElementById('tw-ribbon');
+  function syncSwitch(btn, on){ btn.classList.toggle('on', !!on); }
+  syncSwitch(bunnyBtn, state.showBunny);
+  syncSwitch(ribbonBtn, state.showRibbon);
+  bunnyBtn.addEventListener('click', () => { state.showBunny = !state.showBunny; syncSwitch(bunnyBtn, state.showBunny); applyBunny(state.showBunny); persist({ showBunny: state.showBunny }); });
+  ribbonBtn.addEventListener('click', () => { state.showRibbon = !state.showRibbon; syncSwitch(ribbonBtn, state.showRibbon); applyRibbon(state.showRibbon); persist({ showRibbon: state.showRibbon }); });
+
+  function persist(edits){
+    try{ window.parent.postMessage({ type:'__edit_mode_set_keys', edits }, '*'); }catch(_){ }
+  }
+
+  // ---- Host protocol ----
+  const tweaks = document.getElementById('tweaks');
+  const closeBtn = document.getElementById('tw-close');
+  closeBtn.addEventListener('click', () => {
+    tweaks.classList.remove('show');
+    try{ window.parent.postMessage({ type:'__edit_mode_dismissed' }, '*'); }catch(_){ }
+  });
+  window.addEventListener('message', (e) => {
+    const d = e.data || {};
+    if (d.type === '__activate_edit_mode') tweaks.classList.add('show');
+    else if (d.type === '__deactivate_edit_mode') tweaks.classList.remove('show');
+  });
+  try{ window.parent.postMessage({ type:'__edit_mode_available' }, '*'); }catch(_){ }
+})();
+</script>
+
+</body>
+</html>
